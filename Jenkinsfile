@@ -27,7 +27,7 @@ pipeline {
                     // Perform the Git checkout
                     checkout([
                         $class: 'GitSCM',
-                        branches: [[name: 'master']],
+                        branches: [[name: 'main']],
                         userRemoteConfigs: [[
                             url: 'git@github.com:LoueyDenden/spring_project_certifications.git',
                             credentialsId: 'github'
@@ -262,7 +262,7 @@ pipeline {
                                     git config user.email "louey.denden@polytechnicien.tn"
                                     git add values.yaml
                                     git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
-                                    git push origin master
+                                    git push origin main
                                     cd ../../../..
                                     rm -R temp_repo
                                     """
@@ -287,7 +287,7 @@ pipeline {
                                     git config user.email "louey.denden@polytechnicien.tn"
                                     git add values.yaml
                                     git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
-                                    git push origin master
+                                    git push origin main
                                     cd ../../../..
                                     rm -R temp_repo
                                     """
@@ -312,7 +312,7 @@ pipeline {
                                     git config user.email "louey.denden@polytechnicien.tn"
                                     git add values.yaml
                                     git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
-                                    git push origin master
+                                    git push origin main
                                     cd ../../../..
                                     rm -R temp_repo
                                     """
@@ -337,7 +337,7 @@ pipeline {
                                     git config user.email "louey.denden@polytechnicien.tn"
                                     git add values.yaml
                                     git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
-                                    git push origin master
+                                    git push origin main
                                     cd ../../../..
                                     rm -R temp_repo
                                     """
@@ -362,7 +362,7 @@ pipeline {
                                     git config user.email "louey.denden@polytechnicien.tn"
                                     git add values.yaml
                                     git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
-                                    git push origin master
+                                    git push origin main
                                     cd ../../../..
                                     rm -R temp_repo
                                     """
@@ -387,7 +387,7 @@ pipeline {
                                     git config user.email "louey.denden@polytechnicien.tn"
                                     git add values.yaml
                                     git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
-                                    git push origin master
+                                    git push origin main
                                     cd ../../../..
                                     rm -R temp_repo
                                     """
@@ -412,7 +412,7 @@ pipeline {
                                     git config user.email "louey.denden@polytechnicien.tn"
                                     git add values.yaml
                                     git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
-                                    git push origin master
+                                    git push origin main
                                     cd ../../../..
                                     rm -R temp_repo
                                     """
@@ -437,7 +437,7 @@ pipeline {
                                     git config user.email "louey.denden@polytechnicien.tn"
                                     git add values.yaml
                                     git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
-                                    git push origin master
+                                    git push origin main
                                     cd ../../../..
                                     rm -R temp_repo
                                     """
