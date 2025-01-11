@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: library-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: library
+  template:
+    metadata:
+      labels:
+        app: library
+    spec:
+      containers:
+      - name: library
+        image: loueydenden/library-service:latest
+        ports:
+        - containerPort: 8020
+        envFrom:
+        - configMapRef:
+            name: app-configmap
+        env: 
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: mysqlUsername
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: mysqlPassword

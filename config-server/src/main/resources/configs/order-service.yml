@@ -1,0 +1,41 @@
+eureka:
+  instance:
+    hostname: ${EUREKA_HOSTNAME_ORDER:localhost}
+  client:
+    service-url:
+      defaultZone: ${EUREKA_DEFAULT_ZONE:http://localhost:8761/eureka}
+
+server:
+  port: 8060
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL:jdbc:mysql://localhost:3306/certifDB?createDatabaseIfNotExist=true}
+    username: ${DB_USERNAME:louey}
+    password: ${DB_PASSWORD:louey}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL5Dialect
+    #database: postgresql
+    #database-platform: org.hibernate.dialect.PostgreSQLDialect
+application:
+  config:
+    user-url: ${USER_URL:http://localhost:8222/api/v1/users}
+    certifications-url: ${CERTIFICATIONS_URL:http://localhost:8222/api/v1/certifications}
+    library-url: ${LIBRARY_URL:http://localhost:8222/api/v1/library}
+springdoc:
+  api-docs:
+    path: /order/v3/api-docs
+  swagger-ui:
+    path: /order/swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
+  endpoint:
+    health:
+      show-details: always

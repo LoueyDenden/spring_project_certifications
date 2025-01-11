@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-configmap
+data:
+  EUREKA_HOSTNAME_DISCOVERY: discovery-service
+  CONFIG_SERVER_URL: optional:configserver:http://configserver-service:8888
+  EUREKA_HOSTNAME_GATEWAY: gateway-service
+  EUREKA_DEFAULT_ZONE: http://discovery-service:8761/eureka
+  EUREKA_HOSTNAME_CERTIFICATIONS: certifications-service
+  EUREKA_HOSTNAME_LIBRARY: library-service
+  EUREKA_HOSTNAME_ORDER: order-service
+  EUREKA_HOSTNAME_USER: user-service
+  USER_URL: http://gateway-service/api/v1/users
+  LIBRARY_URL: http://gateway-service/api/v1/library
+  CERTIFICATIONS_URL: http://gateway-service/api/v1/certifications
+  DB_URL: jdbc:mysql://localhost:3306/certifDB?createDatabaseIfNotExist=true
+  UPLOADS_USER_DIR: app
+  UPLOADS_CERTIFICATIONS_DIR: app

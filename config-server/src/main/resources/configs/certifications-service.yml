@@ -1,0 +1,48 @@
+eureka:
+  instance:
+    hostname: ${EUREKA_HOSTNAME_CERTIFICATIONS:localhost}
+  client:
+    service-url:
+      defaultZone: ${EUREKA_DEFAULT_ZONE:http://localhost:8761/eureka}
+
+
+server:
+  port: 8070
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL:jdbc:mysql://localhost:3306/certifDB?createDatabaseIfNotExist=true}
+    username: ${DB_USERNAME:louey}
+    password: ${DB_PASSWORD:louey}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL5Dialect
+    #database: postgresql
+    #database-platform: org.hibernate.dialect.PostgreSQLDialect
+  #flyway:
+   # baseline-on-migrate: true
+    #enabled: true
+    #baseline-description: "init"
+    #baseline-version: 0
+    #user: ${spring.datasource.username}
+    #password: ${spring.datasource.password}
+
+springdoc:
+  api-docs:
+    path: /certifications/v3/api-docs
+  swagger-ui:
+    path: /certifications/swagger-ui.html
+
+uploads:
+  dir: ${UPLOADS_CERTIFICATIONS_DIR:certifications-service/src/main/resources/static/uploads/certifications}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
+  endpoint:
+    health:
+      show-details: always

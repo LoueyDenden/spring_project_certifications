@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+          env:
+            # DATABASE NAME
+            - name: MYSQL_DATABASE
+              value: certifDB
+            # DATABASE USERNAME
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: mysqlUsername
+            # DATABASE PASSWORD
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: mysqlPassword
+            # ROOT PASSWORD
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: mysqlPassword

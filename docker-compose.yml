@@ -1,0 +1,209 @@
+services:
+
+  config-server:
+    build:
+      context: ./config-server
+    container_name: config-server
+    ports:
+      - 8888:8888
+    volumes:
+      - config-server:/app
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost","8888"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
+    networks:
+      - microservices
+
+  discovery-service:
+    build:
+      context: ./discovery-service
+    container_name: discovery-service
+    ports:
+      - 8761:8761
+    volumes:
+      - discovery-service:/app
+    environment:
+      EUREKA_HOSTNAME_DISCOVERY: discovery-service
+      CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost","8761"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
+    networks:
+      - microservices
+    depends_on:
+      config-server:
+        condition: service_healthy
+
+  jenkins:
+    image: salahgo/jenkins:dind
+    container_name: jenkins
+    ports:
+      - 8010:8080
+      - 50000:50000
+    privileged: true
+    volumes:
+      - /var/lib/docker/volumes/jenkins_home/_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    networks:
+      - microservices
+
+
+  gateway:
+    build:
+      context: ./gateway
+    container_name: gateway
+    ports:
+      - 8222:8222
+    volumes:
+      - gateway:/app
+    environment:
+      EUREKA_HOSTNAME_GATEWAY: gateway
+      CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
+      EUREKA_DEFAULT_ZONE: http://discovery-service:8761/eureka
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost","8222"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
+    networks:
+      - microservices
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+
+
+  certifications-service:
+    build:
+      context: ./certifications-service
+    container_name: certifications-service
+    environment:
+      DB_URL: jdbc:mysql://ms_mysql:3306/certifDB?createDatabaseIfNotExist=true
+      DB_USERNAME: louey
+      DB_PASSWORD: louey
+      EUREKA_HOSTNAME_CERTIFICATIONS: certifications-service
+      CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
+      EUREKA_DEFAULT_ZONE: http://discovery-service:8761/eureka
+    volumes:
+      - certifications-service:/app
+    networks:
+      - microservices
+    depends_on:
+      gateway:
+        condition: service_healthy
+
+  library-service:
+    build:
+      context: ./library-service
+    container_name: library-service
+    volumes:
+      - library-service:/app
+    environment:
+      DB_URL: jdbc:mysql://ms_mysql:3306/certifDB?createDatabaseIfNotExist=true
+      DB_USERNAME: louey
+      DB_PASSWORD: louey
+      EUREKA_HOSTNAME_LIBRARY: library-service
+      EUREKA_DEFAULT_ZONE: http://discovery-service:8761/eureka
+      CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
+    networks:
+      - microservices
+    depends_on:
+      gateway:
+        condition: service_healthy
+
+  order-service:
+    build:
+      context: ./order-service
+    container_name: order-service
+    volumes:
+      - order-service:/app
+    environment:
+      USER_URL: http://gateway:8222/api/v1/users
+      LIBRARY_URL: http://gateway:8222/api/v1/library
+      CERTIFICATIONS_URL: http://gateway:8222/api/v1/certifications
+      DB_URL: jdbc:mysql://ms_mysql:3306/certifDB?createDatabaseIfNotExist=true
+      DB_USERNAME: louey
+      DB_PASSWORD: louey
+      EUREKA_HOSTNAME_ORDER: order-service
+      EUREKA_DEFAULT_ZONE: http://discovery-service:8761/eureka
+      CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
+    networks:
+      - microservices
+    depends_on:
+      gateway:
+        condition: service_healthy
+
+
+  user-service:
+    build:
+      context: ./user-service
+    container_name: user-service
+    volumes:
+      - user-service:/app
+    environment:
+      LIBRARY_URL: http://gateway:8222/api/v1/library
+      EUREKA_HOSTNAME_USER: user-service
+      DB_URL: jdbc:mysql://ms_mysql:3306/certifDB?createDatabaseIfNotExist=true
+      DB_USERNAME: louey
+      DB_PASSWORD: louey
+      EUREKA_DEFAULT_ZONE: http://discovery-service:8761/eureka
+      CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
+    networks:
+      - microservices
+    depends_on:
+      gateway:
+        condition: service_healthy
+
+  client:
+    build:
+      context: ./UI_Spring
+    container_name: client
+    volumes:
+      - client:/app
+    ports:
+      - 80:80
+    networks:
+      - microservices
+    depends_on:
+      - user-service
+
+
+
+  mysql:
+    container_name: ms_mysql
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: louey
+      MYSQL_DATABASE: certifDB
+      MYSQL_USER: louey
+      MYSQL_PASSWORD: louey
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - microservices
+    restart: unless-stopped
+
+
+networks:
+  microservices:
+    driver: bridge
+
+volumes:
+  user-service:
+  order-service:
+  library-service:
+  gateway:
+  config-server:
+  discovery-service:
+  certifications-service:
+  client:
+  mysql:
