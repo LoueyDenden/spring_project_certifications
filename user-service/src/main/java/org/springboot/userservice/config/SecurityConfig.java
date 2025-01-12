@@ -22,7 +22,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request.requestMatchers("**")
+                .authorizeHttpRequests(request -> request.requestMatchers("/**")
                         .permitAll()
                         )
                // .addFilterBefore(new CorsFilter(corsConfig.corsConfigurationSource()), ChannelProcessingFilter.class)
