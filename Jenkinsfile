@@ -253,7 +253,7 @@ pipeline {
                                     dockerImageConfigServer.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
                                     cd temp_repo/project_charts/charts/configserver
@@ -278,7 +278,7 @@ pipeline {
                                         dockerImageDiscoveryService.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
                                     cd temp_repo/project_charts/charts/discovery
@@ -303,7 +303,7 @@ pipeline {
                                         dockerImageGateway.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
                                     cd temp_repo/project_charts/charts/gateway
@@ -328,7 +328,7 @@ pipeline {
                                         dockerImageLibraryService.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
                                     cd temp_repo/project_charts/charts/library
@@ -353,7 +353,7 @@ pipeline {
                                         dockerImageUserService.push()
                                 }
                              sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
                                     cd temp_repo/project_charts/charts/user
@@ -378,7 +378,7 @@ pipeline {
                                         dockerImageCertificationsService.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
                                     cd temp_repo/project_charts/charts/certifications
@@ -403,7 +403,7 @@ pipeline {
                                         dockerImageOrderService.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
                                     cd temp_repo/project_charts/charts/order
@@ -428,7 +428,7 @@ pipeline {
                                         dockerImageFront.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
                                     cd temp_repo/project_charts/charts/client
