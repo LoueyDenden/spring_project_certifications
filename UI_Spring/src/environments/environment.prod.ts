@@ -1,5 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'http://localhost:8222/api/v1'
+    apiUrl: 'http://backendapp.francecentral.cloudapp.azure.com/api/v1'
   };
-  
