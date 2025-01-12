@@ -67,7 +67,7 @@ env:
   - name: EUREKA_DEFAULT_ZONE
     value: http://certifManagement-discovery-service:8761/eureka
   - name: DB_URL
-    value: jdbc:mysql://localhost:3306/certifDB?createDatabaseIfNotExist=true
+    value: jdbc:mysql://certifmanagement-mysql-service:3306/certifDB?createDatabaseIfNotExist=true
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: false

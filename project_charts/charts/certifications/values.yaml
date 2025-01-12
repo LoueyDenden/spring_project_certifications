@@ -63,7 +63,7 @@ env:
   - name: CONFIG_SERVER_URL
     value: optional:configserver:http://certifManagement-configserver-service:8888
   - name: DB_URL
-    value: jdbc:mysql://localhost:3306/certifDB?createDatabaseIfNotExist=true
+    value: jdbc:mysql://certifmanagement-mysql-service:3306/certifDB?createDatabaseIfNotExist=true
   - name: EUREKA_HOSTNAME_CERTIFICATIONS
     value: certifManagement-certifications-service
   - name: EUREKA_DEFAULT_ZONE
