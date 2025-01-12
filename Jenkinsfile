@@ -30,7 +30,7 @@ pipeline {
                         branches: [[name: 'main']],
                         userRemoteConfigs: [[
                             url: 'git@github.com:LoueyDenden/spring_project_certifications.git',
-                            credentialsId: 'github'
+                            credentialsId: 'github_key'
                         ]]
                     ])
                     // Get the list of all changed files
