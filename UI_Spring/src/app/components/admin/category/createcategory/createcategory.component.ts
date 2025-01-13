@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../../services/auth.service";
-import {GamesService} from "../../../../services/games.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {CertificationsService} from "../../../../services/certifications.service";
 
 @Component({
   selector: 'app-createcategory',
@@ -18,12 +18,12 @@ export class CreatecategoryComponent implements OnInit{
   success:any;
   error:any;
   id:any
-  constructor(private _game:GamesService,private router:Router,private act:ActivatedRoute,){}
+  constructor(private _certification:CertificationsService,private router:Router,private act:ActivatedRoute,){}
 
   ngOnInit() {
     this.id = this.act.snapshot.paramMap.get('categoryId');
     if (this.id != undefined){
-      this._game.getCategoryById(this.id).subscribe(res=>{
+      this._certification.getCategoryById(this.id).subscribe(res=>{
         this.category=res;
       })
     }
@@ -31,7 +31,7 @@ export class CreatecategoryComponent implements OnInit{
   }
   modify(){
     this.id = this.act.snapshot.paramMap.get('categoryId');
-    this._game.updateCat(this.id,this.category).subscribe(res=>{
+    this._certification.updateCat(this.id,this.category).subscribe(res=>{
       this.success= "Category Updated! "
     },err=>{
       this.error= "Category Not Updated!"
@@ -39,7 +39,7 @@ export class CreatecategoryComponent implements OnInit{
   }
 
   addCategory(){
-    this._game.addCategory(this.category)
+    this._certification.addCategory(this.category)
       .subscribe(
         res=>{
           this.router.navigate(['/categories']);

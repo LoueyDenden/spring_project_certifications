@@ -24,7 +24,7 @@ export class InventoryComponent implements OnInit{
     //this.username=this._auth.getUserDataFromToken();
 
     //listner to backend
-    this._library.getAllGames(this.username).subscribe(res=>{
+    this._library.getAllCertifications(this.username).subscribe(res=>{
       this.library=res;
       //console.log(this.library)
     })

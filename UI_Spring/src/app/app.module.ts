@@ -14,16 +14,11 @@ import { InventoryComponent } from './components/inventory/inventory.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NotfoundComponent } from './shared/notfound/notfound.component';
-import { GameDetailComponent } from './components/game-detail/game-detail.component';
-import { CreategameComponent } from './components/admin/games/creategame/creategame.component';
 import { CreatecategoryComponent } from './components/admin/category/createcategory/createcategory.component';
 import { MyaccountComponent } from './components/myaccount/myaccount.component';
 import { CartComponent } from './shared/cart/cart.component';
-import {GamesService} from "./services/games.service";
-import { PaymentsComponent } from './components/payments/payments.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import { AddmodifyComponent } from './components/admin/users/addmodify/addmodify.component';
-import { GamesComponent } from './components/admin/games/games.component';
 import { CategoryComponent } from './components/admin/category/category.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
@@ -32,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CertificationDetailComponent } from './components/certification-detail/certification-detail.component';
 import { CertificationsComponent } from './components/admin/certifications/certifications.component';
 import { CreatecertificationComponent } from './components/admin/certifications/createcertification/createcertification.component';
+import {CertificationsService} from "./services/certifications.service";
 
 @NgModule({
   declarations: [
@@ -44,15 +40,11 @@ import { CreatecertificationComponent } from './components/admin/certifications/
     OrdersComponent,
     InventoryComponent,
     NotfoundComponent,
-    GameDetailComponent,
-    CreategameComponent,
     CreatecategoryComponent,
     MyaccountComponent,
     CartComponent,
-    PaymentsComponent,
     UsersComponent,
     AddmodifyComponent,
-    GamesComponent,
     CategoryComponent,
     CertificationDetailComponent,
     CertificationsComponent,
@@ -70,7 +62,7 @@ import { CreatecertificationComponent } from './components/admin/certifications/
     MatButtonModule,
     MatIconModule
   ],
-  providers: [GamesService],
+  providers: [CertificationsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

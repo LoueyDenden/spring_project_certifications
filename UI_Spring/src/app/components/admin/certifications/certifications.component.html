@@ -1,1 +1,31 @@
-<p>certifications works!</p>
+<section class="section-sm pb-0">
+  <div class="container">
+    <div class="container mt-4">
+      <button type="button" [routerLink]="['/certifications/create/certification']" class="btn btn-success btn-sm"><i class="ti ti-device-gamepad-2"></i> Add certification</button>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Availablity</th>
+          <th scope="col">Price</th>
+          <th scope="col">Category</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let certification of certifications; let i = index;">
+        <tr>
+          <th scope="row">{{ i }}</th>
+          <td>{{ certification.name }}</td>
+          <td>{{ certification.description }}</td>
+          <td>{{ certification.avaiblity }}</td>
+          <td>{{ certification.price }}€</td>
+          <td>{{ certification.category.name }}</td>
+          <td><button [routerLink]="['/certifications/modify/certification/', certification.id]" class="btn btn-secondary btn-sm">Modify</button>   <button (click)="deleteGame(certification.id)" type="button" class="btn btn-danger btn-sm">Delete</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -17,15 +17,15 @@
           <th scope="col">Action</th>
         </tr>
         </thead>
-        <tbody *ngFor="let game of gamesWillPurchase; let i = index;">
+        <tbody *ngFor="let certification of certificationsWillPurchase; let i = index;">
         <tr>
           <th scope="row">{{ i }}</th>
-          <td>{{ game.name }}</td>
-          <td>{{ game.price }}€</td>
+          <td>{{ certification.name }}</td>
+          <td>{{ certification.price }}€</td>
           <td>
             <button
               class="btn btn-danger btn-sm"
-              (click)="removeGame(game.id)">
+              (click)="removeGame(certification.id)">
               Remove
             </button>
           </td>
@@ -123,20 +123,20 @@
           (click)="clearGames()">
           Clear from Cart
         </button>
-        <button *ngIf="gamesWillPurchase.length === 0 || selectedPaymentMethod === undefined"
+        <button *ngIf="certificationsWillPurchase.length === 0 || selectedPaymentMethod === undefined"
                 (click)="checkout()"
                 [disabled]="true"
                 class="btn btn-secondary btn-sm">
           Checkout
         </button>
 
-        <button *ngIf="username !== undefined && gamesWillPurchase.length > 0 && selectedPaymentMethod !== undefined"
+        <button *ngIf="username !== undefined && certificationsWillPurchase.length > 0 && selectedPaymentMethod !== undefined"
                 (click)="checkout()"
                 class="btn btn-secondary btn-sm">
           Checkout
         </button>
 
-        <button *ngIf="username === undefined && gamesWillPurchase.length > 0 && selectedPaymentMethod !== undefined"
+        <button *ngIf="username === undefined && certificationsWillPurchase.length > 0 && selectedPaymentMethod !== undefined"
                 [routerLink]="['/login']"
                 class="btn btn-secondary btn-sm">
           Checkout

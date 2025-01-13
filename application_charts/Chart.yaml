@@ -1,0 +1,32 @@
+apiVersion: v2
+name: certifmanagement
+description: A Helm chart for the CertifManagement application
+version: 1.0.0
+dependencies:
+  - name: configserver
+    version: 1.0.0
+    repository: https://github.com/LoueyDenden/spring_project_certifications/tree/main/application_charts/charts/configserver
+  - name: discovery
+    version: 1.0.0
+    repository: https://github.com/LoueyDenden/spring_project_certifications/tree/main/application_charts/charts/discovery
+  - name: gateway
+    version: 1.0.0
+    repository: https://github.com/LoueyDenden/spring_project_certifications/tree/main/application_charts/charts/gateway
+  - name: user
+    version: 1.0.0
+    repository: https://github.com/LoueyDenden/spring_project_certifications/tree/main/application_charts/charts/user
+  - name: certifications
+    version: 1.0.0
+    repository: https://github.com/LoueyDenden/spring_project_certifications/tree/main/application_charts/charts/certifications
+  - name: order
+    version: 1.0.0
+    repository: https://github.com/LoueyDenden/spring_project_certifications/tree/main/application_charts/charts/order
+  - name: library
+    version: 1.0.0
+    repository: https://github.com/LoueyDenden/spring_project_certifications/tree/main/application_charts/charts/library
+  - name: client
+    version: 1.0.0
+    repository: https://github.com/LoueyDenden/spring_project_certifications/tree/main/application_charts/charts/client
+  - name: mysql
+    version: 1.0.0
+    repository: https://github.com/LoueyDenden/spring_project_certifications/tree/main/application_charts/charts/mysql

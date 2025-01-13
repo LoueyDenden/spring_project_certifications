@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GamesService } from '../../services/games.service';
+import { CertificationsService } from '../../services/certifications.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  games: any[] = [];
+  certifications: any[] = [];
   imageUrls: string[] = [];
   searchForm: FormGroup;
   name: any;
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   gameAdded: any;
 
   constructor(
-    private _games: GamesService,
+    private _certifications: CertificationsService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
@@ -44,12 +44,12 @@ export class HomeComponent implements OnInit {
   }
   search(): void {
     this.name = this.searchForm.get('name')?.value;
-    this._games.findByName(this.name, this.currentPage - 1, this.size).subscribe(
+    this._certifications.findByName(this.name, this.currentPage - 1, this.size).subscribe(
       (res) => {
-        this.games = res.content;
+        this.certifications = res.content;
         this.totalElements = res.totalElements;
         this.totalPages = Array.from({ length: res.totalPages }, (_, i) => i + 1);
-        this.fetchImages(); // Fetch images after the games are loaded
+        this.fetchImages(); // Fetch images after the certifications are loaded
       },
       (err) => {
         console.error('Error fetching data:', err);
@@ -59,8 +59,8 @@ export class HomeComponent implements OnInit {
 
   fetchImages(): void {
     this.imageUrls = []; // Reset imageUrls array
-    this.games.forEach(game => {
-      this._games.GetGamesImages(game.id).subscribe(
+    this.certifications.forEach(certification => {
+      this._certifications.GetCertificationsImages(certification.id).subscribe(
         (blob) => {
           const imageUrl = URL.createObjectURL(blob);
           this.imageUrls.push(imageUrl); // Store the image URL
@@ -90,8 +90,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  addToCart(game: any): void {
-    this._games.addToCart(game);
-    this.gameAdded = `${game.name} added to cart.`;
+  addToCart(certification: any): void {
+    this._certifications.addToCart(certification);
+    this.gameAdded = `${certification.name} added to cart.`;
   }
 }

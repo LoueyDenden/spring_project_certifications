@@ -38,13 +38,13 @@
     <hr class="my-4">
     <!-- Game Cards -->
     <div class="row gy-5 gx-4 g-xl-5">
-      <div class="col-lg-6" *ngFor="let item of games">
+      <div class="col-lg-6" *ngFor="let item of certifications">
         <article class="card post-card h-100 border-0 bg-transparent">
           <div class="card-body">
-            <a class="d-block" [routerLink]="['/games/', item.id]" title="{{ item.name }}">
-              <div class="post-image position-relative" *ngFor="let game of games; let i = index">
+            <a class="d-block" [routerLink]="['/certifications/', item.id]" title="{{ item.name }}">
+              <div class="post-image position-relative" *ngFor="let certification of certifications; let i = index">
                 <img *ngIf="imageUrls[i]" class="w-100 h-auto rounded"
-                [src]="imageUrls[i]" alt="{{ game.name }}" width="970" height="500">
+                [src]="imageUrls[i]" alt="{{ certification.name }}" width="970" height="500">
               </div>
             </a>
             <h2 class="mb-3 post-title">{{ item.name }}</h2>

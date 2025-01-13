@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {GamesService} from "../../services/games.service";
 import {AuthService} from "../../services/auth.service";
 import {OrdersService} from "../../services/orders.service";
+import {CertificationsService} from "../../services/certifications.service";
 
 @Component({
   selector: 'app-cart',
@@ -9,11 +9,11 @@ import {OrdersService} from "../../services/orders.service";
   styleUrl: './cart.component.css',
 })
 export class CartComponent implements OnInit{
-  constructor(private _game:GamesService,private _auth:AuthService,private _orders:OrdersService) {
+  constructor(private _certification:CertificationsService,private _auth:AuthService,private _orders:OrdersService) {
   }
   username?:'';
   error:any;
-  gamesWillPurchase:any=[];
+  certificationsWillPurchase:any=[];
   totalAmount:any;
   success:any
   selectedPaymentMethod: any = undefined;  // Will hold the selected payment method (VISA, MASTERCARD, PAYPAL)
@@ -25,8 +25,8 @@ export class CartComponent implements OnInit{
     reference:'',
     paymentMethod:'',
     username:'',
-    games:[{
-      gameId:''
+    certifications:[{
+      certificationId:''
     }]
   };
 
@@ -37,17 +37,17 @@ export class CartComponent implements OnInit{
       this.username=undefined
     }
 
-    this.gamesWillPurchase = this._game.getCartItems();
-    this.totalAmount = this.gamesWillPurchase.reduce(
-      (sum: any, game: { price: any; }) => sum + (game.price || 0),
+    this.certificationsWillPurchase = this._certification.getCartItems();
+    this.totalAmount = this.certificationsWillPurchase.reduce(
+      (sum: any, certification: { price: any; }) => sum + (certification.price || 0),
       0
     );
   }
   removeGame(id: any) {
-    this._game.removeFromCart(id)
-    this.gamesWillPurchase=this._game.getCartItems()
-    this.totalAmount = this.gamesWillPurchase.reduce(
-      (sum: any, game: { price: any; }) => sum + (game.price || 0),
+    this._certification.removeFromCart(id)
+    this.certificationsWillPurchase=this._certification.getCartItems()
+    this.totalAmount = this.certificationsWillPurchase.reduce(
+      (sum: any, certification: { price: any; }) => sum + (certification.price || 0),
       0
     );
   }
@@ -68,8 +68,8 @@ checkout(){
  this.order.reference=`MS-${new Date().getFullYear()}${(new Date().getMonth() + 1).toString().padStart(2, '0')}${new Date().getDate().toString().padStart(2, '0')}`;
  this.order.paymentMethod=this.selectedPaymentMethod;
  this.order.username=this.username;
-  this.order.games = this.gamesWillPurchase.map((game: { id: any; }) => {
-    return { gameId: game.id }; // Assuming each game object has a gameId field
+  this.order.certifications = this.certificationsWillPurchase.map((certification: { id: any; }) => {
+    return { certificationId: certification.id }; // Assuming each certification object has a certificationId field
   });
   this._orders.createOrder(this.order).subscribe(res=>{
     this.result=res;
@@ -88,8 +88,8 @@ checkout(){
   )
 }
   clearGames(){
-    this._game.clearFromCart()
-    this.gamesWillPurchase=this._game.getCartItems()
+    this._certification.clearFromCart()
+    this.certificationsWillPurchase=this._certification.getCartItems()
     this.totalAmount=0
   }
 

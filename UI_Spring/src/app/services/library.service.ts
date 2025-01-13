@@ -13,7 +13,7 @@ export class LibraryService {
 
   token = localStorage.getItem('token');
 
-  getAllGames(username:any){
+  getAllCertifications(username:any){
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
       'Content-Type': 'application/json',
