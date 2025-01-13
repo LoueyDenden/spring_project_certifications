@@ -74,11 +74,11 @@ checkout(){
   this._orders.createOrder(this.order).subscribe(res=>{
     this.result=res;
     this.id= this.result.msg.substring(this.result.msg.indexOf(":") + 2);
-    if (this.result.msg=="Game already exists with id: "+this.id){
+    if (this.result.msg=="certification already exists with id: "+this.id){
        // Get the part after the colon
-      this.error = "You Have Already Game with ID: " + this.id+" Please remove it from your cart! ";
+      this.error = "You Have Already certification with ID: " + this.id+" Please remove it from your cart! ";
     }else{
-      this.success = "You Have Successfully Purchased your games check your inventory"
+      this.success = "You Have Successfully Purchased your certifications check your inventory"
       this.clearGames()
     }
 

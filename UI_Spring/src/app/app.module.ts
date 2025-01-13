@@ -29,6 +29,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { CertificationDetailComponent } from './components/certification-detail/certification-detail.component';
+import { CertificationsComponent } from './components/admin/certifications/certifications.component';
+import { CreatecertificationComponent } from './components/admin/certifications/createcertification/createcertification.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,9 @@ import { MatIconModule } from '@angular/material/icon';
     AddmodifyComponent,
     GamesComponent,
     CategoryComponent,
+    CertificationDetailComponent,
+    CertificationsComponent,
+    CreatecertificationComponent,
 
 
   ],

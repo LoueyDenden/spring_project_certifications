@@ -4,11 +4,11 @@
       <table class="table table-striped">
         <thead>
         <tr>
-          <th scope="col">Game Name</th>
+          <th scope="col">Certification Name</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let game of library.games; let i = index;">
+        <tr *ngFor="let game of library.certification; let i = index;">
             <td><a class="d-block" [routerLink]="['/games/', game.gameId]">{{ game.name }}</a></td>
         </tr>
         </tbody>
