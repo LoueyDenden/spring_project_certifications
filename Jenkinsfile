@@ -52,7 +52,7 @@ pipeline {
             }
         }
         stage('Build Config Server Image') {
-            when { changeset "config-server/**"}
+            //when { changeset "config-server/**"}
             steps {
                 dir('config-server') {
                     script {
@@ -133,8 +133,8 @@ pipeline {
         }
 
         //scan trivy
-        /*stage('Scan Config Server Image') {
-            when { changeset "config-server/**"}
+        stage('Scan Config Server Image') {
+            //when { changeset "config-server/**"}
             steps {
                 script {
                     sh """
@@ -147,7 +147,7 @@ pipeline {
             }
         }
 
-        stage('Scan Discovery Service Image') {
+        /*stage('Scan Discovery Service Image') {
             when { changeset "discovery-service/**"}
             steps {
                 script {
