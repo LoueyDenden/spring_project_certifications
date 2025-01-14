@@ -39,20 +39,20 @@ pipeline {
                         returnStdout: true
                     ).trim().split("\n")
                     echo "Changed files: ${changes}"
-                    // Check if all changes are inside project_charts
-                    def onlyInProjectCharts = changes.every { it.startsWith('project_charts/') || it.startsWith('kubernetes/') || it.startsWith('screens/') || it.startsWith('README.md') }
+                    // Check if all changes are inside application_charts
+                    def onlyInProjectCharts = changes.every { it.startsWith('application_charts/') || it.startsWith('kubernetes/') || it.startsWith('screens/') || it.startsWith('README.md') }
                     if (onlyInProjectCharts) {
-                        echo "Changes are exclusively in project_charts or kuberenetes or screens. Skipping the pipeline."
-                        currentBuild.description = "Skipped: Changes only in project_charts or kuberenetes or screens"
+                        echo "Changes are exclusively in application_charts or kuberenetes or screens. Skipping the pipeline."
+                        currentBuild.description = "Skipped: Changes only in application_charts or kuberenetes or screens"
                         env.SKIP_PIPELINE = true
                         return // Exit the pipeline
                     }
-                    echo "Changes are not limited to project_charts or kuberenetes or screens. Proceeding with the pipeline."
+                    echo "Changes are not limited to application_charts or kuberenetes or screens. Proceeding with the pipeline."
                 }
             }
         }
         stage('Build Config Server Image') {
-            //when { changeset "config-server/**"}
+            when { changeset "config-server/**"}
             steps {
                 dir('config-server') {
                     script {
@@ -62,7 +62,7 @@ pipeline {
             }
         }
         stage('Build Discovery Service Image') {
-            //when { changeset "discovery-service/**"}
+            when { changeset "discovery-service/**"}
             steps {
                 dir('discovery-service') {
                     script {
@@ -72,7 +72,7 @@ pipeline {
             }
         }
         stage('Build Gateway Image') {
-            //when { changeset "gateway/**"}
+            when { changeset "gateway/**"}
             steps {
                 dir('gateway') {
                     script {
@@ -82,7 +82,7 @@ pipeline {
             }
         }
         stage('Build User Image') {
-            //when { changeset "user-service/**"}
+            when { changeset "user-service/**"}
             steps {
                 dir('user-service') {
                     script {
@@ -92,7 +92,7 @@ pipeline {
             }
         }
         stage('Build Certifications Image') {
-            //when { changeset "certifications-service/**"}
+            when { changeset "certifications-service/**"}
             steps {
                 dir('certifications-service') {
                     script {
@@ -102,7 +102,7 @@ pipeline {
             }
         }
         stage('Build Order Image') {
-            //when { changeset "order-service/**"}
+            when { changeset "order-service/**"}
             steps {
                 dir('order-service') {
                     script {
@@ -112,7 +112,7 @@ pipeline {
             }
         }
         stage('Build Library Image') {
-            //when { changeset "library-service/**"}
+            when { changeset "library-service/**"}
             steps {
                 dir('library-service') {
                     script {
@@ -122,9 +122,9 @@ pipeline {
             }
         }
         stage('Build FrontEnd Image') {
-            //when { changeset "UI_Spring/**"}
+            when { changeset "frontend/**"}
             steps {
-                dir('UI_Spring') {
+                dir('frontend') {
                     script {
                         dockerImageFront = docker.build("${IMAGE_NAME_FRONTEND}:${BUILD_ID}")
                     }
@@ -134,7 +134,7 @@ pipeline {
 
         //scan trivy
         stage('Scan Config Server Image') {
-            //when { changeset "config-server/**"}
+            when { changeset "config-server/**"}
             steps {
                 script {
                     sh """
@@ -148,7 +148,7 @@ pipeline {
         }
 
         stage('Scan Discovery Service Image') {
-            //when { changeset "discovery-service/**"}
+            when { changeset "discovery-service/**"}
             steps {
                 script {
                     sh """
@@ -162,7 +162,7 @@ pipeline {
         }
 
         stage('Scan Gateway Image') {
-            //when { changeset "gateway/**"}
+            when { changeset "gateway/**"}
             steps {
                 script {
                     sh """
@@ -176,7 +176,7 @@ pipeline {
         }
 
         stage('Scan Certifications Service Image') {
-            //when { changeset "certifications-service/**"}
+            when { changeset "certifications-service/**"}
             steps {
                 script {
                     sh """
@@ -190,7 +190,7 @@ pipeline {
         }
 
         stage('Scan User Service Image') {
-            //when { changeset "user-service/**"}
+            when { changeset "user-service/**"}
             steps {
                 script {
                     sh """
@@ -204,7 +204,7 @@ pipeline {
         }
 
         stage('Scan Library Service Image') {
-            //when { changeset "library-service/**"}
+            when { changeset "library-service/**"}
             steps {
                 script {
                     sh """
@@ -218,7 +218,7 @@ pipeline {
         }
 
         stage('Scan Order Service Image') {
-            //when { changeset "order-service/**"}
+            when { changeset "order-service/**"}
             steps {
                 script {
                     sh """
@@ -232,7 +232,7 @@ pipeline {
         }
 
         stage('Scan Client Service Image') {
-            //when { changeset "UI_Spring/**"}
+            when { changeset "frontend/**"}
             steps {
                 script {
                     sh """
@@ -246,7 +246,7 @@ pipeline {
         }
 
         stage('Push Config Server Image to Docker Hub') {
-            //when { changeset "config-server/**"}
+            when { changeset "config-server/**"}
                 steps {
                     script {
                             docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -256,7 +256,7 @@ pipeline {
                             withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
-                                    cd temp_repo/project_charts/charts/configserver
+                                    cd temp_repo/application_charts/charts/configserver
                                     sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
                                     git config user.name "Louey Denden"
                                     git config user.email "louey.denden@polytechnicien.tn"
@@ -271,7 +271,7 @@ pipeline {
                         }
             }
         stage('Push Discovery Service Image to Docker Hub') {
-            //when { changeset "discovery-service/**"}
+            when { changeset "discovery-service/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -281,7 +281,7 @@ pipeline {
                             withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
-                                    cd temp_repo/project_charts/charts/discovery
+                                    cd temp_repo/application_charts/charts/discovery
                                     sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
                                     git config user.name "Louey Denden"
                                     git config user.email "louey.denden@polytechnicien.tn"
@@ -296,7 +296,7 @@ pipeline {
                     }
             }
         stage('Push Gateway Image to Docker Hub') {
-            //when { changeset "gateway/**"}
+            when { changeset "gateway/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -306,7 +306,7 @@ pipeline {
                             withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
-                                    cd temp_repo/project_charts/charts/gateway
+                                    cd temp_repo/application_charts/charts/gateway
                                     sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
                                     git config user.name "Louey Denden"
                                     git config user.email "louey.denden@polytechnicien.tn"
@@ -321,7 +321,7 @@ pipeline {
                     }
             }
         stage('Push Library Service Image to Docker Hub') {
-            //when { changeset "library-service/**"}
+            when { changeset "library-service/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -331,7 +331,7 @@ pipeline {
                             withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
-                                    cd temp_repo/project_charts/charts/library
+                                    cd temp_repo/application_charts/charts/library
                                     sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
                                     git config user.name "Louey Denden"
                                     git config user.email "louey.denden@polytechnicien.tn"
@@ -346,7 +346,7 @@ pipeline {
                     }
             }
         stage('Push User Service Image to Docker Hub') {
-            //when { changeset "user-service/**"}
+            when { changeset "user-service/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -356,7 +356,7 @@ pipeline {
                             withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
-                                    cd temp_repo/project_charts/charts/user
+                                    cd temp_repo/application_charts/charts/user
                                     sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
                                     git config user.name "Louey Denden"
                                     git config user.email "louey.denden@polytechnicien.tn"
@@ -371,7 +371,7 @@ pipeline {
                     }
             }
         stage('Push Certifications Service Image to Docker Hub') {
-            //when { changeset "certifications-service/**"}
+            when { changeset "certifications-service/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -381,7 +381,7 @@ pipeline {
                             withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
-                                    cd temp_repo/project_charts/charts/certifications
+                                    cd temp_repo/application_charts/charts/certifications
                                     sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
                                     git config user.name "Louey Denden"
                                     git config user.email "louey.denden@polytechnicien.tn"
@@ -396,7 +396,7 @@ pipeline {
                     }
             }
         stage('Push Order Service Image to Docker Hub') {
-            //when { changeset "order-service/**"}
+            when { changeset "order-service/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -406,7 +406,7 @@ pipeline {
                             withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
-                                    cd temp_repo/project_charts/charts/order
+                                    cd temp_repo/application_charts/charts/order
                                     sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
                                     git config user.name "Louey Denden"
                                     git config user.email "louey.denden@polytechnicien.tn"
@@ -421,7 +421,7 @@ pipeline {
                     }
             }
         stage('Push FRONTEND Image to Docker Hub') {
-            //when { changeset "UI_Spring/**"}
+            when { changeset "frontend/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -431,7 +431,7 @@ pipeline {
                             withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:LoueyDenden/spring_project_certifications.git temp_repo
-                                    cd temp_repo/project_charts/charts/client
+                                    cd temp_repo/application_charts/charts/client
                                     sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
                                     git config user.name "Louey Denden"
                                     git config user.email "louey.denden@polytechnicien.tn"
