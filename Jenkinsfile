@@ -40,14 +40,14 @@ pipeline {
                     ).trim().split("\n")
                     echo "Changed files: ${changes}"
                     // Check if all changes are inside application_charts
-                    def onlyInProjectCharts = changes.every { it.startsWith('application_charts/') || it.startsWith('kubernetes/') || it.startsWith('screens/') || it.startsWith('README.md') }
+                    def onlyInProjectCharts = changes.every { it.startsWith('application_charts/') }
                     if (onlyInProjectCharts) {
-                        echo "Changes are exclusively in application_charts or kuberenetes or screens. Skipping the pipeline."
-                        currentBuild.description = "Skipped: Changes only in application_charts or kuberenetes or screens"
+                        echo "Changes are exclusively in application_charts. Skipping the pipeline."
+                        currentBuild.description = "Skipped: Changes only in application_charts"
                         env.SKIP_PIPELINE = true
                         return // Exit the pipeline
                     }
-                    echo "Changes are not limited to application_charts or kuberenetes or screens. Proceeding with the pipeline."
+                    echo "Changes are not limited to application_charts. Proceeding with the pipeline."
                 }
             }
         }
